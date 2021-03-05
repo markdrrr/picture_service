@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'home' %}">Назад к списку</a>
+    <h1>Новое изображение</h1>
+    <form action="{% url 'add_image' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block">Добавить</button>
+    </form>
+{% endblock %}

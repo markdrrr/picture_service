@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Список изображений</h1>
+    {% if images %}
+        {% for img in images %}
+            <p><a href="{{ img.get_absolute_url }}">{{ img }}</a></p>
+        {% endfor %}
+    {% else %}
+    <p>Нет доступных изображений</p>
+    {% endif %}
+    <a href="{% url 'add_image' %}">Добавить изображение</a>
+{% endblock %}
