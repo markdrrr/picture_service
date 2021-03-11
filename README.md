@@ -8,6 +8,16 @@ python manage.py migrate
 python manage.py runserver
 Перейти на http://localhost:8000
 ```
+#### Запуск в Docker'e
+```
+git clone https://github.com/markdrrr/picture_service.git
+cd picture_service
+apt install docker-compose
+docker-compose build
+docker-compose up
+Перейти на http://localhost:8000
+```
+
 
 #### Реализован функционал:
 1. Загрузка изображений по ссылке либо через форму
