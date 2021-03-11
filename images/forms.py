@@ -1,3 +1,4 @@
+import requests
 from django import forms
 
 from images.models import Image
@@ -18,6 +19,11 @@ class ImageForm(forms.ModelForm):
             raise forms.ValidationError('Воспользуйтесь одним из вариантов загрузки')
         if img and url:
             raise forms.ValidationError('Воспользуйтесь ТОЛЬКО одним из вариантов загрузки')
+        response = requests.get(url)
+        if response.status_code != 200:
+            raise forms.ValidationError('Картинка не доступна по ссылке, проверьте ссылку')
+        else:
+            self.cleaned_data['url_content'] = response.content
         return self.cleaned_data
 
 

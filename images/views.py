@@ -2,6 +2,7 @@ from io import BytesIO
 
 import requests
 from PIL import Image as Image_PIL
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.shortcuts import render, redirect, get_object_or_404
@@ -66,15 +67,12 @@ def add_image(request):
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            url = form.cleaned_data.get('url')
-            if url:
-                # name_img = (url.split('/')[-1]).split('.jpg')[0]
+            content = form.cleaned_data.get('url_content')
+            if content:
                 picture = Image()
                 picture.save()
-                response = requests.get(url)
-                if response.status_code == 200:
-                    picture.img.save("image_%s.jpg" % picture.pk, ContentFile(response.content), save=True)
-                    return redirect(picture)
+                picture.img.save("image_%s.jpg" % picture.pk, ContentFile(content), save=True)
+                return redirect(picture)
             picture = form.save()
             return redirect(picture)
     else:
