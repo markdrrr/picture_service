@@ -58,3 +58,8 @@ class ImageTest(TestCase):
         self.client.post(reverse('add_image'), {'url': 'https://stackru.com/static/img/logo.png'})
         imgs = Image.objects.all()
         self.assertTrue(len(imgs) > 10)
+
+    def test_form_no_valid_url(self):
+        form_data = {'url': 'http://radiomaria.org.ua/images/content/normal/8gg1lpu0f55k8ggo8.jpg'}
+        form = ImageForm(data=form_data)
+        self.assertFalse(form.is_valid())
